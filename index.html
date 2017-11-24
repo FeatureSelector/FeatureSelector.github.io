@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+  padding: 10px;
+}
+
+path { 
+    stroke: #0a0;
+    stroke-width: 1;
+    stroke-opacity: 0.75;
+    fill: none;
+}
+
+.axis,
+.frame {
+  shape-rendering: crispEdges;
+}
+.axis line {
+  stroke: #ddd;
+}
+
+.axis path {
+  display: none;
+}
+
+text {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.cell text {
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.frame {
+  stroke: #444;
+}
+
+
+circle {
+  fill-opacity: .8;
+}
+
+circle.hidden {
+  fill: #ccc !important;
+}
+.extent {
+  fill: #000;
+  fill-opacity: .125;
+  stroke: #fff;
+}
+
+/* tooltip */
+.d3-tip {
+  line-height: 1;
+  padding: 10px;
+  font-size: 13px;
+  font-family: "sans-serif";
+  background: rgb(255, 555, 555);
+  color: #000;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+/*.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(200, 220, 245, 0.96);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}*/
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#controlPanel {
+  position:absolute;
+  z-index: 0;
+  top: 11px;
+  left: 1800px;
+  border: 1px solid rgba(0,0,0, 0.3);
+  background-color: rgba(0,0,0, 0.15);
+}
+#usMap {
+ position:absolute;
+ z-index: 0;
+ top: 100px;
+ left: 1800px;
+ /*border: 1px solid rgba(0,0,0, 0.3);*/
+ background-color: rgba(0,0,0, 0);
+}
+
+.state{
+ fill: none;
+ stroke: #a9a9a9;
+ stroke-width: 1;
+}
+.state:hover{
+ fill-opacity:0.5;
+}
+</style>
+<body>
+
+<div id="controlPanel"  class="controlPanel">
+<input type="checkbox" id="checkbox1"  onclick="toggleScore()">
+<label for="checkbox1" >Show monotonic scores </label><br><br>
+<input type="radio" id="radio1" name="radio1" onclick="" > All scatterplots in cluster<br>
+<input type="radio" id="radio2" name="radio1" onclick="" checked> Linked scatterplot<br>
+<input type="radio" id="radio3" name="radio1" onclick=""> Summary scatterplot  <br>
+
+
+ </label>
+
+</div>
+<div id ="usMap">
+ <svg id="statesvg" width="930" height="600"></svg>
+</div>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="js/States.js"></script>
+<script src="js/tooltip.js"></script>
+<script src="js/util.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+
+</script>
+
+</body>
