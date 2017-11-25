@@ -6,7 +6,7 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
-var width = 1500,
+var width = 1000,
     size,
     padding = 0;//size/20;
 
@@ -49,9 +49,9 @@ var svg;
 //var file = "data2/Madelon";     // 2
 //var file = "data2/Usmoney";    //1
 
-//var file = "data2/USEmployment";
+var file = "data2/USEmployment";
 //var file = "data3/Nonfarm";
-var file = "data3/Construction";
+//var file = "data3/Construction";
 //var file = "data3/Transportation";
 //var file = "data3/Leisure";
 //var file = "data3/Government";
@@ -85,16 +85,13 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     .attr("x", padding)
     .attr("y", 0)
     .text("Finished reading data points");
-   
     svg.call(tip);       
 
   // Reading Scagnostics data ***********************************************************
   d3.tsv(file+"Output2.csv", function(error, data2) {
     dataS = data2;
 
-
     var standard = gaussian(0.5, 0.2);
-
 
     function gaussian(mean, stdev) {
         var y2;
@@ -179,17 +176,21 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
   // drawScagHistogram(2, 600,600, size-50,size-120);
   // drawScagHistogram(getIndex(2,29), 200,200, size-50,size-120);
   // drawScagHistogram(getIndex(2,11), 200,600, size-50,size-120);
-   drawScagHistogram(getIndex(11,29), 600,200, size*4,size*4);
+  // drawScagHistogram(getIndex(11,29), 600,200, size*4,size*4);
 
+  // drawScagHistogram(getIndex(2,29), 600,200, 200,200);
+  
+
+   svg.select(".textNotification")
+    .text("Computing leaders");    
 
     leaderList = leaderAlgorithm(traits, disSim); // Update the similarity function here
 
     //  var obj = leaderList
-      var tmp = leaderList[3];
-      leaderList[3] = leaderList[10];
-      leaderList[10] =tmp;
-     debugger;
-
+    var tmp = leaderList[3];
+    leaderList[3] = leaderList[10];
+    leaderList[10] =tmp;
+    
     for (i = 0; i < leaderList.length; i++) {
       leaderList[i].children.sort(function(a,b){
         var mi = leaderList[i].mi;
@@ -201,7 +202,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           return 1;
       })
     }
-    size = 1400/leaderList.length;
+    size = 830/leaderList.length;
     x.range([size*0.9 , size*0.1]);
     y.range([size*0.1 , size*0.9  ])
       
@@ -212,7 +213,8 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     drawStatemap(id=statesvg, leaderList);//Draw US Map
 // findMostDifferent();
-
+    svg.select(".textNotification")
+    .text("");  
     function cross() {
       var c = [], n = leaderList.length, i, j;
       for (i = 0; i < n; i++) 
@@ -263,7 +265,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     // arr: input variables
     // sim: similarity funciton
     function leaderAlgorithm(arr, disSim){
-      var r = 0.7;
+      var r = 0.0;
       if (file== "data3/Nonfarm")
           r =0.42;
       else  if (file== "data3/Construction")
@@ -306,7 +308,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           if (leaderList[i].children.length>0)
               count++;
       }
-        console.log("number of non-singleton clusters:"+count);
+      console.log("number of non-singleton clusters:"+count);
 
 
       return leaderList;

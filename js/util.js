@@ -46,8 +46,8 @@ function getIndex(mi, mj){
 }    
 
 
- // Find the most different
- function findMostDifferent(){
+// Find the most different
+function findMostDifferent(){
   var n = traits.length;
   var pairList = [];
   var varList = [];
@@ -78,23 +78,22 @@ function getIndex(mi, mj){
       }  
     }  
   }   
-    var cell = svg.selectAll(".cell")
-      .data(pairList).enter()
-      .append("g")
-        .attr("class", "cell")
-        .attr("transform", function(d) { return "translate(" + (d.i%3 * size) + "," + ((d.j-0.8)*size) + ")"; })
-        .each(plot);
-    
-    svg.selectAll(".varText2") 
-      .data(varList).enter()
-      .append("text")
-        .style("font-size", "20px")
-        .attr("class", "varText2")
-        .attr("x", function(d,i){ return i%3 * size+25;  })
-        .attr("y", function(d,i){ return (i+0.12) * size; })
-        .text(function(d,i) { return traits[d]; });
+  var cell = svg.selectAll(".cell")
+    .data(pairList).enter()
+    .append("g")
+      .attr("class", "cell")
+      .attr("transform", function(d) { return "translate(" + (d.i%3 * size) + "," + ((d.j-0.8)*size) + ")"; })
+      .each(plot);
+  
+  svg.selectAll(".varText2") 
+    .data(varList).enter()
+    .append("text")
+      .style("font-size", "20px")
+      .attr("class", "varText2")
+      .attr("x", function(d,i){ return i%3 * size+25;  })
+      .attr("y", function(d,i){ return (i+0.12) * size; })
+      .text(function(d,i) { return traits[d]; });
 }
-
 
 // splom function ****************************
 function splomMain(svg_, pairList, varList) {
@@ -102,7 +101,7 @@ function splomMain(svg_, pairList, varList) {
     .data(pairList).enter()
     .append("g")
       .attr("class", "cellMain")
-      .attr("transform", function(d) { return "translate(" + (d.i) * size + "," + d.j * size + ")"; })
+      .attr("transform", function(d) { return "translate(" + (d.i) * size + "," + (d.j-0.8) * size + ")"; })
       .each(plot)
       .on('mouseover', function(d) {
         if (selectedPlot<-1){
@@ -114,17 +113,25 @@ function splomMain(svg_, pairList, varList) {
         svg_.selectAll(".frame")
           .style("stroke", function(d2) { 
             return (d==d2) ? "#bb0" : "#000"; });
-      })
-      ;
+
+            if (d.mi<d.mj){
+               var k = d.mj*(d.mj-1)/2+d.mi; 
+               drawScagHistogram(getIndex(d.mi,d.mj), 600,200, 200,200);
+            }
+            else if (d.mi>d.mj){
+              var k = d.mi*(d.mi-1)/2+d.mj; 
+              drawScagHistogram(getIndex(d.mj,d.mi), 600,200, 200,200);
+            }            
+          });
   // Titles for the diagonal.
   svg_.
   selectAll(".varText")
     .data(varList).enter()
     .append("text")
       .attr("class", "varText")
-      .style("font-size", "18px")
+      .style("font-size", "20px")
       .attr("x", function(d,i){ return i * size+3; })
-      .attr("y", function(d,i){ return i==0 ? size -5: (i+0.5) * size+6; })
+      .attr("y", function(d,i){ return i==0 ? (i+0.1) * size : (i) * size; })
       .text(function(d,i) { return traits[d.mi]; })
     //  .style("text-shadow", "1px 1px 1px #000000")
       .on('mouseover', function(d) {
@@ -136,9 +143,7 @@ function splomMain(svg_, pairList, varList) {
         svg_.selectAll(".varText")
           .style("fill", function(d2) { return d==d2 ? "#000" : "#000"; });
       });
-  //debugger;
-    // Brushing    
-    //  cell.call(brush); 
+      //cell.call(brush); 
 }  
 
 // Plot function *******************************
@@ -162,7 +167,6 @@ function plot(p) {
     y2 = d3.scale.linear().range([shift+size2*0.9 , shift+size2*0.1])
   }
   else{
-
       x2 = d3.scale.linear().range([shift+size2*0.1 , shift+size2*0.9])
       y2 = d3.scale.linear().range([shift+size2*0.9 , shift+size2*0.1])
   }
@@ -175,8 +179,8 @@ function plot(p) {
       .attr("width", size2 - padding)
       .attr("height", size2 - padding)
       .style("fill", function(d) {
-          //return "#bbb";
-            if (p.mi<p.mj){
+          return "#ddd";
+          if (p.mi<p.mj){
              var k = p.mj*(p.mj-1)/2+p.mi; 
              return colorRedBlue(dataS[k][selectedScag]);
           }
@@ -275,7 +279,7 @@ var yAxis = d3.svg.axis()
       .style("fill", function(d){ return color10(d.name);})
       .attr("x", function(d,i) { return x(d.name); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.value); })
+      .attr("y", function(d) { console.log(d.value+" "+y(d.value)); return y(d.value); })
       .attr("height", function(d) { return h - y(d.value); });
 }
 
