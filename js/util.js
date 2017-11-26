@@ -45,6 +45,66 @@ function getIndex(mi, mj){
   }
 }    
 
+var colorArray = ["#9dbee6","#afcae6","#c8dce6","#e6e6e6","#e6e6d8","#e6d49c","#e6b061","#e6852f","#e6531a","#e61e1a"];
+// Scagnostics color legend ****************
+function drawColorLegend(){
+    //Append a defs (for definition) element to your SVG
+    var defs = svg.append("defs");
+    //Append a linearGradient element to the defs and give it a unique id
+    var linearGradient = defs.append("linearGradient")
+        .attr("id", "linear-gradient");    
+    //Horizontal gradient
+    linearGradient
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%");    
+    for (var i =0; i<colorArray.length;i++){
+        var percent = i*10;
+        linearGradient.append("stop") 
+            .attr("offset", percent+"%")   
+            .attr("stop-color", colorArray[i]); //dark blue  
+    }      
+
+    var yScagLegend = 0;
+    var xScagLegend = 380;
+    var wScagLegend = 160;
+    //Draw the rectangle and fill with gradient
+    svg.append("rect")
+        .attr("x", xScagLegend+11)
+        .attr("y", yScagLegend+5)
+        .attr("width", wScagLegend)
+        .attr("height", 26)
+        .style("fill", "url(#linear-gradient)");
+    
+    svg.append("text")
+        .attr("x", xScagLegend+wScagLegend/2+8)
+        .attr("y", yScagLegend)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .style("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("fill", "#000")
+        .text("Monotonic measure"); 
+    svg.append("text")
+        .attr("x", xScagLegend+2)
+        .attr("y", yScagLegend+22)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .style("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("fill", "#000")
+        .text("0");  
+    svg.append("text")
+        .attr("x", xScagLegend+wScagLegend+12)
+        .attr("y", yScagLegend+22)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .style("text-anchor", "left")
+        .style("font-weight", "bold")
+        .style("fill", "#000")
+        .text("1");           
+}
 
 // Find the most different
 function findMostDifferent(){
@@ -114,6 +174,8 @@ function splomMain(svg_, pairList, varList) {
           .style("stroke", function(d2) { 
             return (d==d2) ? "#bb0" : "#000"; });
 
+            // Generate the scagnostics for video 
+            /*
             if (d.mi<d.mj){
                var k = d.mj*(d.mj-1)/2+d.mi; 
                drawScagHistogram(getIndex(d.mi,d.mj), 600,200, 200,200);
@@ -121,7 +183,7 @@ function splomMain(svg_, pairList, varList) {
             else if (d.mi>d.mj){
               var k = d.mi*(d.mi-1)/2+d.mj; 
               drawScagHistogram(getIndex(d.mj,d.mi), 600,200, 200,200);
-            }            
+            }            */
           });
   // Titles for the diagonal.
   svg_.
@@ -129,7 +191,7 @@ function splomMain(svg_, pairList, varList) {
     .data(varList).enter()
     .append("text")
       .attr("class", "varText")
-      .style("font-size", "20px")
+      .style("font-size", "16px")
       .attr("x", function(d,i){ return i * size+3; })
       .attr("y", function(d,i){ return i==0 ? (i+0.1) * size : (i) * size; })
       .text(function(d,i) { return traits[d.mi]; })
@@ -137,6 +199,7 @@ function splomMain(svg_, pairList, varList) {
       .on('mouseover', function(d) {
         if (selectedPlot<-1)
           showTip(d);
+
       })
       .on('click', function(d) {
         selectedPlot = -1;
@@ -179,7 +242,7 @@ function plot(p) {
       .attr("width", size2 - padding)
       .attr("height", size2 - padding)
       .style("fill", function(d) {
-          return "#ddd";
+          //return "#ddd";
           if (p.mi<p.mj){
              var k = p.mj*(p.mj-1)/2+p.mi; 
              return colorRedBlue(dataS[k][selectedScag]);
@@ -228,7 +291,7 @@ function plot(p) {
       });         
 } // End plot functiong
 
-function drawScagHistogram(pairId, x_, y_, w, h){
+function drawScagHistogram(svg, pairId, x_, y_, w, h){
   var a=[];
   for (var key in dataS[pairId]){
     var obj={};
@@ -240,15 +303,15 @@ function drawScagHistogram(pairId, x_, y_, w, h){
   var x = d3.scale.ordinal().rangeRoundBands([0, w], .05);
       y = d3.scale.linear().rangeRound([h, 0]);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
 
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .innerTickSize(-w)
-    .ticks(5);
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .innerTickSize(-w)
+      .ticks(5);
 
   var g = svg.append("g")
     .attr("transform", "translate(" + x_+ "," + y_+ ")");
@@ -279,7 +342,7 @@ var yAxis = d3.svg.axis()
       .style("fill", function(d){ return color10(d.name);})
       .attr("x", function(d,i) { return x(d.name); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { console.log(d.value+" "+y(d.value)); return y(d.value); })
+      .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return h - y(d.value); });
 }
 

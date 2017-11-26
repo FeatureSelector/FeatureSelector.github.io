@@ -88,7 +88,7 @@ function showTip(d) {
     }
   }
   else if (document.getElementById("radio2").checked){
-    var plotSize = 400;
+    var plotSize = 300;
     var padding = 60;  
     tip.offset([0,100])
     tipW = plotSize+padding;
@@ -96,37 +96,50 @@ function showTip(d) {
     tip_svg = d3.select('.d3-tip').append('svg')
       .attr("width", tipW)
       .attr("height", tipH); 
-
+    
     var x = d3.scale.linear()
       .range([padding+30, plotSize+padding-30]);
     var y = d3.scale.linear()
         .range([plotSize+padding-30, padding+30]);
     x.domain(domainByTrait);
     y.domain(domainByTrait);
+
     linkedScatterplot(tip_svg, plotSize, d, x, y, padding);
 
-    // Next button
-    tip_svg.append("rect")
-      .attr("class", "buttonNext")
-      .attr("x", tipW-150)
-      .attr("y", -5)
-      .attr("width", 50)
-      .attr("height", bH)
-      .style("stroke-width", 0.5)
-      .style("stroke", "#000")
-      .style("fill", function(d) { return "#aaa" })
-      .on('mouseover',mouseoverButtonNext)
-      .on('mouseout',mouseoutButtonNext)
-      .on('click',mouseClickButtonNext);
-    tip_svg.append("text")
-        .attr("class", "buttonNextText")
-        .attr("x", tipW-142)
-        .attr("y", 9)
-        .style("fill","#000")
-        .text("Next")
+     // Singleton cluster ***********
+    if (d.children!=undefined && d.children.length==0){
+        tip_svg.attr("height", 10);    
+        tip_svg.append("text")
+            .attr("class", "textNoVariable")
+            .attr("x", 10)
+            .attr("y", 10)
+            .style("fill","#000")
+            .text("Singleton cluster: Only 1 variable");
+    }    
+    else{
+       // Next button
+      tip_svg.append("rect")
+        .attr("class", "buttonNext")
+        .attr("x", tipW-150)
+        .attr("y", -5)
+        .attr("width", 50)
+        .attr("height", bH)
+        .style("stroke-width", 0.5)
+        .style("stroke", "#000")
+        .style("fill", function(d) { return "#aaa" })
         .on('mouseover',mouseoverButtonNext)
         .on('mouseout',mouseoutButtonNext)
         .on('click',mouseClickButtonNext);
+      tip_svg.append("text")
+          .attr("class", "buttonNextText")
+          .attr("x", tipW-142)
+          .attr("y", 9)
+          .style("fill","#000")
+          .text("Next")
+          .on('mouseover',mouseoverButtonNext)
+          .on('mouseout',mouseoutButtonNext)
+          .on('click',mouseClickButtonNext);
+    }    
     function mouseoverButtonNext(d){
       tip_svg.selectAll(".buttonNext")
         .style("fill", "#f50"); 
@@ -146,13 +159,11 @@ function showTip(d) {
 
       var p = linkedPairList[linkedIndex]
       var k = getIndex(p.mi,p.mj);       
-  
-             
+        
      // tip_svg.selectAll(".frame2").transition().duration(1000)
      //   .style("fill", function(d) { 
      //        return colorRedBlue(dataS[k][selectedScag]);
      //   });
-
 
       tip_svg.selectAll(".thumnails"+p.mi+"__"+p.mj).transition().duration(1000)
         .style("stroke-width",2);  
@@ -297,8 +308,40 @@ function showTip(d) {
             .style("fill", function(d3) { 
                 return "#0a0";  
             });  
-    setSelectedThumbnails(); 
-      
+    setSelectedThumbnails();  
+  }  
+  else if (document.getElementById("radio3").checked){
+    var plotSize = 300;
+    var padding = 60;  
+    tip.offset([0,100])
+    tipW = plotSize+padding;
+    tipH = plotSize+padding;
+    tip_svg = d3.select('.d3-tip').append('svg')
+      .attr("width", tipW)
+      .attr("height", tipH); 
+        
+    // Plugin thumnails  
+    if (d.children) {  // diagonal varable names in the second matrix
+       tip_svg.attr("height", 10);    
+        tip_svg.append("text")
+            .attr("class", "textNoVariable")
+            .attr("x", 10)
+            .attr("y", 10)
+            .style("fill","#000")
+            .text("Select a scatterplot to see Scagnostics chart");
+    }
+    else{ // cells in the second matrix
+      // Generate the scagnostics histogram
+      tip_svg.attr("height", 240);    
+      if (d.mi<d.mj){
+         var k = d.mj*(d.mj-1)/2+d.mi; 
+         drawScagHistogram(tip_svg, getIndex(d.mi,d.mj), 35,0, 240,200);
+      }
+      else if (d.mi>d.mj){
+        var k = d.mi*(d.mi-1)/2+d.mj; 
+        drawScagHistogram(tip_svg, getIndex(d.mj,d.mi), 35,0, 240,200);
+      }            
+    } 
   }  
 
     

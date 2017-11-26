@@ -122,54 +122,6 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
        }
     }
     
-     /* 
-    for (var i=0; i<data.length;i++){
-      var j=0;
-      var preData;
-      for (var key in data[i]){
-       // data[i][key]= Math.random();
-        if (j==0){  // the first variable
-          data[i][key]=i/(data.length-1);
-        }
-        else if (j==1){
-          var x=i/(data.length-1);
-           var d = -x*20+10; 
-          data[i][key] =  (0.05+(1/(1+Math.exp(d))))*0.92+(Math.random()-0.5)*0.04;
-          if (x<0.5)
-            data[i][key]*=0.8;
-          else{
-             data[i][key]=Math.sqrt(data[i][key]);
-          }
-        }
-        else if (j==2){ 
-          var v =  standard();
-          if (v>1) v=1;
-          if (v<0) v=0;
-
-          var x=i/(data.length-1);
-          if (x<0.5)
-            data[i][key] = v/1.3;
-          else
-            data[i][key] = 0.3+v/1.5;  
-        }
-        j++; 
-      }    
-    }*/
-    
-    /* // Scagnostics values
-    var text = "";
-    for (var i=0; i<data.length;i++){
-      var count=0;
-      for (var key in data[i]){
-        if (count==2 || count ==11)
-          text+=data[i][key]+"\t";
-        else if (count==29)
-          text+=data[i][key];
-        count++;
-      } 
-      text += "\n";
-    }  
-      console.log(text);  */
       
   // drawScagHistogram(0, 200,200, size-50,size-120);
   // drawScagHistogram(1, 200,600, size-50,size-120);
@@ -180,6 +132,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
   // drawScagHistogram(getIndex(2,29), 600,200, 200,200);
   
+  drawColorLegend();
 
    svg.select(".textNotification")
     .text("Computing leaders");    
@@ -187,9 +140,9 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     leaderList = leaderAlgorithm(traits, disSim); // Update the similarity function here
 
     //  var obj = leaderList
-    var tmp = leaderList[3];
-    leaderList[3] = leaderList[10];
-    leaderList[10] =tmp;
+    //var tmp = leaderList[3];
+    //leaderList[3] = leaderList[10];
+    //leaderList[10] =tmp;
     
     for (i = 0; i < leaderList.length; i++) {
       leaderList[i].children.sort(function(a,b){
@@ -202,7 +155,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           return 1;
       })
     }
-    size = 830/leaderList.length;
+    size = 820/leaderList.length;
     x.range([size*0.9 , size*0.1]);
     y.range([size*0.1 , size*0.9  ])
       
@@ -211,7 +164,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     splomMain(svg, pairList, leaderList);
 
-    drawStatemap(id=statesvg, leaderList);//Draw US Map
+//    drawStatemap(id=statesvg, leaderList);//Draw US Map
 // findMostDifferent();
     svg.select(".textNotification")
     .text("");  
@@ -265,7 +218,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     // arr: input variables
     // sim: similarity funciton
     function leaderAlgorithm(arr, disSim){
-      var r = 0.0;
+      var r = 0.7;
       if (file== "data3/Nonfarm")
           r =0.42;
       else  if (file== "data3/Construction")

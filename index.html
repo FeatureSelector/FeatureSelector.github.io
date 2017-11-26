@@ -19,7 +19,7 @@ path {
   shape-rendering: crispEdges;
 }
 .axis line {
-  stroke: #ddd;
+  stroke: #888;
 }
 
 .axis path {
@@ -61,9 +61,9 @@ circle.hidden {
   padding: 10px;
   font-size: 13px;
   font-family: "sans-serif";
-  background: rgb(255, 555, 555);
+  background: rgb(225, 225, 225);
   color: #000;
-  border-radius: 2px;
+  border-radius: 8px;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -90,7 +90,7 @@ circle.hidden {
   position:absolute;
   z-index: 0;
   top: 11px;
-  left: 1800px;
+  left: 600px;
   border: 1px solid rgba(0,0,0, 0.3);
   background-color: rgba(0,0,0, 0.15);
 }
@@ -98,11 +98,10 @@ circle.hidden {
  position:absolute;
  z-index: 0;
  top: 100px;
- left: 1800px;
+ left: 600px;
  /*border: 1px solid rgba(0,0,0, 0.3);*/
  background-color: rgba(0,0,0, 0);
 }
-
 .state{
  fill: none;
  stroke: #a9a9a9;
@@ -117,9 +116,9 @@ circle.hidden {
 <div id="controlPanel"  class="controlPanel">
 <input type="checkbox" id="checkbox1"  onclick="toggleScore()">
 <label for="checkbox1" >Show monotonic scores </label><br><br>
-<input type="radio" id="radio1" name="radio1" onclick="" > All scatterplots in cluster<br>
-<input type="radio" id="radio2" name="radio1" onclick="" checked> Linked scatterplot<br>
-<input type="radio" id="radio3" name="radio1" onclick=""> Summary scatterplot  <br>
+<input type="radio" id="radio1" name="radioGroup" onclick="" > All scatterplots in cluster<br>
+<input type="radio" id="radio2" name="radioGroup" onclick="" > Linked scatterplot<br>
+<input type="radio" id="radio3" name="radioGroup" onclick="" checked> Scagnostics bar chart<br>
 
 
  </label>
@@ -129,8 +128,8 @@ circle.hidden {
  <svg id="statesvg" width="930" height="600"></svg>
 </div>
 
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="javascripts/d3.v3.min.js"></script>
+<script src="javascripts/d3.tip.v0.6.3.js"></script>
 <script src="js/States.js"></script>
 <script src="js/tooltip.js"></script>
 <script src="js/util.js"></script>
