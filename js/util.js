@@ -67,7 +67,7 @@ function drawColorLegend(){
     }      
 
     var yScagLegend = 0;
-    var xScagLegend = 380;
+    var xScagLegend = 550;
     var wScagLegend = 160;
     //Draw the rectangle and fill with gradient
     svg.append("rect")
@@ -242,7 +242,7 @@ function plot(p) {
       .attr("width", size2 - padding)
       .attr("height", size2 - padding)
       .style("fill", function(d) {
-          //return "#ddd";
+          return "#ddd";
           if (p.mi<p.mj){
              var k = p.mj*(p.mj-1)/2+p.mi; 
              return colorRedBlue(dataS[k][selectedScag]);
@@ -256,6 +256,11 @@ function plot(p) {
           }
       })
       .style("stroke-width",0.5);
+
+   //var num = Math.floor(data.length/10);  // Limit 20 datapoints in a scatterplto
+   //data2 = data.filter(function(d,i){
+   //   return i%num==0;
+   //})   
   cell.selectAll("circle")
       .data(data)
     .enter().append("circle")

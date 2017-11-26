@@ -57,11 +57,12 @@ function showTip(d) {
       d.children.forEach(function (d2){
         varList.push(d2);
       });
-      tip.offset([-(varList.length-1)*size-20,100])
+      //tip.offset([-(varList.length-1)*size-20,100])
+      tip.offset([0,100])
       tipW = varList.length*size;
       tipH = (varList.length)*size;
       tip_svg = d3.select('.d3-tip').append('svg')
-        .attr("width", tipW)
+        .attr("width", tipW+100)
         .attr("height", tipH);
       splom2(tip_svg, pairList, varList);  
     }
@@ -89,7 +90,7 @@ function showTip(d) {
   }
   else if (document.getElementById("radio2").checked){
     var plotSize = 300;
-    var padding = 60;  
+    var padding = 100;  
     tip.offset([0,100])
     tipW = plotSize+padding;
     tipH = plotSize+padding;
@@ -115,12 +116,35 @@ function showTip(d) {
             .attr("y", 10)
             .style("fill","#000")
             .text("Singleton cluster: Only 1 variable");
+
+        tip_svg.append("rect")
+          .attr("class", "buttonClose")
+          .attr("x", tipW-50)
+          .attr("y", -5)
+          .attr("width", 50)
+          .attr("height", bH)
+          .style("stroke-width", 0.5)
+          .style("stroke", "#000")
+          .style("fill", function(d) { return "#aaa" })
+          .on('mouseover',mouseoverButtonClose)
+          .on('mouseout',mouseoutButtonClose)
+          .on('click',mouseClickButtonClose);
+        tip_svg.append("text")
+            .attr("class", "buttonCloseText")
+            .attr("x", tipW-42)
+            .attr("y", 9)
+            .style("fill","#000")
+            .text("Close")
+            .on('mouseover',mouseoverButtonClose)
+            .on('mouseout',mouseoutButtonClose)
+            .on('click',mouseClickButtonClose);   
+            return;
     }    
     else{
        // Next button
       tip_svg.append("rect")
         .attr("class", "buttonNext")
-        .attr("x", tipW-150)
+        .attr("x", tipW-104)
         .attr("y", -5)
         .attr("width", 50)
         .attr("height", bH)
@@ -132,7 +156,7 @@ function showTip(d) {
         .on('click',mouseClickButtonNext);
       tip_svg.append("text")
           .attr("class", "buttonNextText")
-          .attr("x", tipW-142)
+          .attr("x", tipW-96)
           .attr("y", 9)
           .style("fill","#000")
           .text("Next")
@@ -517,7 +541,7 @@ function linkedScatterplot(svg_, plotSize, d, x, y, padding) {
       //if (pairList.length>0)
       //  return colorRedBlue(sumS/pairList.length);
       //else
-        return "#ddd";  
+        return "#fff";  
     });   
 
   var a = [];

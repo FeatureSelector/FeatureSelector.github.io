@@ -1,4 +1,4 @@
-/* 2016 
+/* 2017
  * Tommy Dang (on the Scagnostics project, as Assistant professor, iDVL@TTU)
  *
  * THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
@@ -6,7 +6,7 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
-var width = 1000,
+var width = 1100,
     size,
     padding = 0;//size/20;
 
@@ -49,12 +49,12 @@ var svg;
 //var file = "data2/Madelon";     // 2
 //var file = "data2/Usmoney";    //1
 
-var file = "data2/USEmployment";
+//var file = "data2/USEmployment";
 //var file = "data3/Nonfarm";
 //var file = "data3/Construction";
 //var file = "data3/Transportation";
 //var file = "data3/Leisure";
-//var file = "data3/Government";
+var file = "data3/Government";
 
 
 
@@ -139,10 +139,16 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     leaderList = leaderAlgorithm(traits, disSim); // Update the similarity function here
 
-    //  var obj = leaderList
-    //var tmp = leaderList[3];
-    //leaderList[3] = leaderList[10];
-    //leaderList[10] =tmp;
+    // Swap variable for examples in the paper in video
+    /*var obj = leaderList
+    var tmp = leaderList[3];
+    leaderList[3] = leaderList[11];
+    leaderList[11] =tmp;
+
+    var obj = leaderList
+    var tmp = leaderList[14];
+    leaderList[14] = leaderList[8];
+    leaderList[8] =tmp;*/
     
     for (i = 0; i < leaderList.length; i++) {
       leaderList[i].children.sort(function(a,b){
@@ -155,7 +161,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           return 1;
       })
     }
-    size = 820/leaderList.length;
+    size = 830/leaderList.length;
     x.range([size*0.9 , size*0.1]);
     y.range([size*0.1 , size*0.9  ])
       
@@ -164,7 +170,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     splomMain(svg, pairList, leaderList);
 
-//    drawStatemap(id=statesvg, leaderList);//Draw US Map
+    drawStatemap(id=statesvg, leaderList);//Draw US Map
 // findMostDifferent();
     svg.select(".textNotification")
     .text("");  
@@ -218,7 +224,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     // arr: input variables
     // sim: similarity funciton
     function leaderAlgorithm(arr, disSim){
-      var r = 0.7;
+      var r = 0.82;
       if (file== "data3/Nonfarm")
           r =0.42;
       else  if (file== "data3/Construction")
@@ -268,7 +274,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     }
 
     // Color var text by states for the Use case
-    /*  svg.selectAll(".varText").style("fill", function(d){
+      svg.selectAll(".varText").style("fill", function(d){
           //return "#ccc";
         //  debugger;
           if (stateToColor[traits[d.mi].trim()]== undefined){
@@ -277,7 +283,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
           return stateToColor[traits[d.mi].trim()];
       })  // this is for the use case ************************ March 20 2017
-*/
+
 
 
   });  
