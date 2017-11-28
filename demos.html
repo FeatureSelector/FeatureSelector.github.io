@@ -89,8 +89,8 @@ circle.hidden {
 #controlPanel {
   position:absolute;
   z-index: 0;
-  top: 11px;
-  left: 1000px;
+  top: 100px;
+  left: 800px;
   border: 1px solid rgba(0,0,0, 0.3);
   background-color: rgba(0,0,0, 0.15);
 }
@@ -98,7 +98,7 @@ circle.hidden {
  position:absolute;
  z-index: 0;
  top: 100px;
- left: 900px;
+ left: 00px;
  /*border: 1px solid rgba(0,0,0, 0.3);*/
  background-color: rgba(0,0,0, 0);
 }
@@ -111,7 +111,34 @@ circle.hidden {
  fill-opacity:0.5;
 }
 </style>
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+<meta name="description" content="FeatureSelector: Variable Selection Using Visual Features of 2D Projections"/>
+<meta name="keywords" content="FeatureSelector,Scagnostics"/> 
+<meta name="author" content="FeatureSelector"/> 
+<link rel="stylesheet" type="text/css" href="styles/default.css" media="screen"/>
+<link rel="shortcut icon" href="styles/FeatureSelector.png">
+
+<title>FeatureSelector</title>
+</head>
+
 <body>
+<h1>Variable Selection Using Visual Features of 2D Projections</h1>
+<h2>EuroVis 2018, Online Submission ID #1030 </h2>
+    <div id="menu">
+      <nav>
+        <ul>
+        <li><a href="index.html"><b><span style="color:#fff">Video<span></b></a></li>
+        <li><a href="layout.html"><span style="color:#888">Layout<span></a></li>
+        <li><a href="usecases.html"><span style="color:#888">Use cases<span></a></li>
+        <li><a href="demos.html"><span style="color:#888">Demos<span></a></li>
+          
+        </li>  
+        </ul>
+      </nav>
+    </div>
 
 <div id="controlPanel"  class="controlPanel">
 <input type="checkbox" id="checkbox1"  onclick="toggleScore()">
@@ -121,11 +148,11 @@ circle.hidden {
 <input type="radio" id="radio3" name="radioGroup" onclick="" > Scagnostics bar chart<br>
 
 
- </label>
+</label>
 
 </div>
 <div id ="usMap">
- <svg id="statesvg" width="930" height="600"></svg>
+ <svg id="statesvg" width="0" height="600"></svg>
 </div>
 
 <script src="javascripts/d3.v3.min.js"></script>
@@ -135,8 +162,10 @@ circle.hidden {
 <script src="js/util.js"></script>
 <script src="js/main.js"></script>
 
-<script>
-
-</script>
+<div class="footer">
+    <span class="right">&copy; Last revised: September 30, 2017</span>
+    <div class="clearer"><span></span></div>
+  </div>
+</div>  
 
 </body>

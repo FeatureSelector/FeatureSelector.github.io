@@ -191,9 +191,9 @@ function splomMain(svg_, pairList, varList) {
     .data(varList).enter()
     .append("text")
       .attr("class", "varText")
-      .style("font-size", "16px")
+      .style("font-size", "12px")
       .attr("x", function(d,i){ return i * size+3; })
-      .attr("y", function(d,i){ return i==0 ? (i+0.1) * size : (i) * size; })
+      .attr("y", function(d,i){ return i==0 ? (i+0.3) * size : (i-0.12) * size; })
       .text(function(d,i) { return traits[d.mi]; })
     //  .style("text-shadow", "1px 1px 1px #000000")
       .on('mouseover', function(d) {
@@ -242,7 +242,7 @@ function plot(p) {
       .attr("width", size2 - padding)
       .attr("height", size2 - padding)
       .style("fill", function(d) {
-          return "#ddd";
+         // return "#ddd";
           if (p.mi<p.mj){
              var k = p.mj*(p.mj-1)/2+p.mi; 
              return colorRedBlue(dataS[k][selectedScag]);

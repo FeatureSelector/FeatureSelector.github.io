@@ -6,7 +6,7 @@
  * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  */
 
-var width = 1100,
+var width = document.body.clientWidth,
     size,
     padding = 0;//size/20;
 
@@ -42,7 +42,7 @@ var svg;
 
 //var file = "data/Breast";
 //var file = "data/Sonar";   // 2
-//var file = "data/NRC";      // This is the data for Figure 6 in the paper
+var file = "data/NRC";      // This is the data for Figure 6 in the paper
 //var file = "data/Subway3";    // Good
 //var file = "data2/Communities";     // 9
 //var file = "data2/MLB2008";     // 8
@@ -54,14 +54,23 @@ var svg;
 //var file = "data3/Construction";
 //var file = "data3/Transportation";
 //var file = "data3/Leisure";
-var file = "data3/Government";
+//var file = "data3/Government";
 
 
+svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", 755);
 
+  svg.append("rect")
+    .attr("class", "background")
+    .style("fill", "#fff")
+    .attr("x", -10)
+    .attr("y", -10)
+    .attr("width", width+30)
+    .attr("height", 800);
 //var file = "data2/Arcene200";  // too large
 //var file = "data2/2016";  // Sample data of 3 variables for Figure 5 in the paper
 
-//  d3.tsv("data/Subway3Standardized.csv", function(error, data_) {
 d3.tsv(file+"Standardized.csv", function(error, data_) {
   if (error) throw error;
 
@@ -76,10 +85,8 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     .on("brush", brushmove)
     .on("brushend", brushend);
 
-  svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", width);
-
+  
+      
   svg.append("text")
     .attr("class", "textNotification")
     .attr("x", padding)
@@ -140,12 +147,12 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     leaderList = leaderAlgorithm(traits, disSim); // Update the similarity function here
 
     // Swap variable for examples in the paper in video
-    /*var obj = leaderList
-    var tmp = leaderList[3];
-    leaderList[3] = leaderList[11];
-    leaderList[11] =tmp;
-
     var obj = leaderList
+    var tmp = leaderList[3];
+    leaderList[3] = leaderList[9];
+    leaderList[9] =tmp;
+
+    /*var obj = leaderList
     var tmp = leaderList[14];
     leaderList[14] = leaderList[8];
     leaderList[8] =tmp;*/
@@ -161,7 +168,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           return 1;
       })
     }
-    size = 830/leaderList.length;
+    size = 800/leaderList.length;
     x.range([size*0.9 , size*0.1]);
     y.range([size*0.1 , size*0.9  ])
       
@@ -170,7 +177,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     splomMain(svg, pairList, leaderList);
 
-    drawStatemap(id=statesvg, leaderList);//Draw US Map
+//    drawStatemap(id=statesvg, leaderList);//Draw US Map
 // findMostDifferent();
     svg.select(".textNotification")
     .text("");  
@@ -224,7 +231,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     // arr: input variables
     // sim: similarity funciton
     function leaderAlgorithm(arr, disSim){
-      var r = 0.82;
+      var r = 0.7;
       if (file== "data3/Nonfarm")
           r =0.42;
       else  if (file== "data3/Construction")
@@ -272,7 +279,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
       return leaderList;
     }
-
+    /*
     // Color var text by states for the Use case
       svg.selectAll(".varText").style("fill", function(d){
           //return "#ccc";
@@ -283,7 +290,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
           return stateToColor[traits[d.mi].trim()];
       })  // this is for the use case ************************ March 20 2017
-
+    */
 
 
   });  
