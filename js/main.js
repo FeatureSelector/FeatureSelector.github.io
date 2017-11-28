@@ -163,8 +163,8 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     // Swap variable for examples in the paper in video
     var obj = leaderList
-    var tmp = leaderList[3];
-    leaderList[3] = leaderList[9];
+    var tmp = leaderList[4];
+    leaderList[4] = leaderList[9];
     leaderList[9] =tmp;
 
     /*var obj = leaderList
