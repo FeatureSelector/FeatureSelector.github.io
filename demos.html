@@ -26,10 +26,6 @@ path {
   display: none;
 }
 
-text {
-  font-weight: bold;
-  font-size: 12px;
-}
 
 .cell text {
   font-weight: bold;
@@ -90,7 +86,7 @@ circle.hidden {
   position:absolute;
   z-index: 0;
   top: 100px;
-  left: 800px;
+  left: 880px;
   border: 1px solid rgba(0,0,0, 0.3);
   background-color: rgba(0,0,0, 0.15);
 }
@@ -139,6 +135,10 @@ circle.hidden {
         </ul>
       </nav>
     </div>
+<!-- Spinner when loading -->
+<div id="loadingSpinner">
+  <!-- <span id="progressText"> -->
+</div>
 
 <div id="controlPanel"  class="controlPanel">
 <input type="checkbox" id="checkbox1"  onclick="toggleScore()">
@@ -157,6 +157,7 @@ circle.hidden {
 
 <script src="javascripts/d3.v3.min.js"></script>
 <script src="javascripts/d3.tip.v0.6.3.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> <!-- Spinner when loading -->
 <script src="js/States.js"></script>
 <script src="js/tooltip.js"></script>
 <script src="js/util.js"></script>

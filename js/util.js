@@ -66,8 +66,8 @@ function drawColorLegend(){
             .attr("stop-color", colorArray[i]); //dark blue  
     }      
 
-    var yScagLegend = 0;
-    var xScagLegend = 550;
+    var yScagLegend = 35;
+    var xScagLegend = 580;
     var wScagLegend = 160;
     //Draw the rectangle and fill with gradient
     svg.append("rect")
@@ -77,6 +77,26 @@ function drawColorLegend(){
         .attr("height", 26)
         .style("fill", "url(#linear-gradient)");
     
+    if (file.indexOf("NRC")>=0){  
+      svg.append("text")
+          .attr("x", xScagLegend-130)
+          .attr("y", yScagLegend-20)
+          .attr("font-family", "Tahoma, Geneva, sans-serif")
+          .attr("font-size", "16px")
+          .style("text-anchor", "start")
+          .style("fill", "#000")
+          .text("Data:"); 
+
+        svg.append("text")
+          .attr("x", xScagLegend-85)
+          .attr("y", yScagLegend-20)
+          .attr("font-family", "Impact, Charcoal, sans-serif")
+          .attr("font-size", "18px")
+          .style("text-anchor", "start")
+          .style("fill", "#600")
+          .text("NRC university rankings in Mathematics in 2006"); 
+    }
+
     svg.append("text")
         .attr("x", xScagLegend+wScagLegend/2+8)
         .attr("y", yScagLegend)

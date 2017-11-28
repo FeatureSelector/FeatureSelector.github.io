@@ -71,6 +71,21 @@ svg = d3.select("body").append("svg")
 //var file = "data2/Arcene200";  // too large
 //var file = "data2/2016";  // Sample data of 3 variables for Figure 5 in the paper
 
+// START: loader spinner settings ****************************
+    var opts = {
+      lines: 25, // The number of lines to draw
+      length: 35, // The length of each line
+      width: 8, // The line thickness
+      radius: 35, // The radius of the inner circle
+      color: '#000', // #rgb or #rrggbb or array of colors
+      speed: 2, // Rounds per second
+      trail: 50, // Afterglow percentage
+      className: 'spinner', // The CSS class to assign to the spinner
+    };
+    var target = document.getElementById('loadingSpinner');
+    var spinner = new Spinner(opts).spin(target);
+    // END: loader spinner settings ****************************
+
 d3.tsv(file+"Standardized.csv", function(error, data_) {
   if (error) throw error;
 
@@ -279,6 +294,10 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
       return leaderList;
     }
+
+     // Spinner Stop ********************************************************************
+        spinner.stop();
+
     /*
     // Color var text by states for the Use case
       svg.selectAll(".varText").style("fill", function(d){
