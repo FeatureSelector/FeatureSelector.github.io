@@ -60,7 +60,7 @@ var file = "data/NRC";
 
 svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", 755);
+    .attr("height", 795);
 
   svg.append("rect")
     .attr("class", "background")
@@ -68,7 +68,7 @@ svg = d3.select("body").append("svg")
     .attr("x", -10)
     .attr("y", -10)
     .attr("width", width+30)
-    .attr("height", 800);
+    .attr("height", 840);
 //var file = "data2/Arcene200";  // too large
 //var file = "data2/2016";  // Sample data of 3 variables for Figure 5 in the paper
 
