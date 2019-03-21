@@ -60,7 +60,7 @@ var file = "data/NRC";
 
 svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", 855);
+    .attr("height", 1200);
 
   svg.append("rect")
     .attr("class", "background")
@@ -68,7 +68,7 @@ svg = d3.select("body").append("svg")
     .attr("x", -10)
     .attr("y", -10)
     .attr("width", width+30)
-    .attr("height", 900);
+    .attr("height", 1000);
 //var file = "data2/Arcene200";  // too large
 //var file = "data2/2016";  // Sample data of 3 variables for Figure 5 in the paper
 
@@ -247,7 +247,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
     // arr: input variables
     // sim: similarity funciton
     function leaderAlgorithm(arr, disSim){
-      var r = 0.7;
+      var r = 0.1;
       if (file== "data3/Nonfarm")
           r =0.42;
       else  if (file== "data3/Construction")
