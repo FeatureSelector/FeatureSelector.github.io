@@ -60,7 +60,7 @@ var file = "data/NRC";
 
 svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", 1200);
+    .attr("height", 1800);
 
   svg.append("rect")
     .attr("class", "background")
@@ -68,7 +68,7 @@ svg = d3.select("body").append("svg")
     .attr("x", -10)
     .attr("y", -10)
     .attr("width", width+30)
-    .attr("height", 1000);
+    .attr("height", 1500);
 //var file = "data2/Arcene200";  // too large
 //var file = "data2/2016";  // Sample data of 3 variables for Figure 5 in the paper
 
@@ -162,11 +162,31 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
 
     leaderList = leaderAlgorithm(traits, disSim); // Update the similarity function here
 
+
+    for (i = 0; i < leaderList.length; i++) {
+      var sum = 0;
+      for (j = 0; j < leaderList.length; j++) {
+        if (j==i) continue;
+        var index1 = getIndex(i,j);
+        sum += +dataS[index1]["Monotonic"];  
+      } 
+      leaderList[i].sumM = sum; 
+    }  
+    leaderList.sort(function(a,b){
+     if (a.sumM>b.sumM)
+        return -1;
+      else
+        return 1;
+    })    
+    
+  
+    debugger;
+
     // Swap variable for examples in the paper in video
-    var obj = leaderList
-    var tmp = leaderList[4];
-    leaderList[4] = leaderList[9];
-    leaderList[9] =tmp;
+    //var obj = leaderList
+    //var tmp = leaderList[4];
+    //leaderList[4] = leaderList[9];
+    //leaderList[9] =tmp;
 
     /*var obj = leaderList
     var tmp = leaderList[14];
@@ -184,7 +204,7 @@ d3.tsv(file+"Standardized.csv", function(error, data_) {
           return 1;
       })
     }
-    size = 800/leaderList.length;
+    size = 1000/leaderList.length;
     x.range([size*0.9 , size*0.1]);
     y.range([size*0.1 , size*0.9  ])
       

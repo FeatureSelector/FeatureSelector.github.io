@@ -7,7 +7,7 @@
  */
 
 
-var selectedScag = "Monotonic";
+var selectedScag = "Clumpy";
 var color10 = d3.scale.category10();
 
  // *************************BRUSHING **********************************
@@ -181,7 +181,7 @@ function splomMain(svg_, pairList, varList) {
     .data(pairList).enter()
     .append("g")
       .attr("class", "cellMain")
-      .attr("transform", function(d) { return "translate(" + (d.i) * size + "," + (d.j-0.8) * size + ")"; })
+      .attr("transform", function(d) { return "translate(" + (10+(d.i) * size) + "," + (50+(d.j-0.8) * size) + ")"; })
       .each(plot)
       .on('mouseover', function(d) {
         if (selectedPlot<-1){
@@ -212,8 +212,8 @@ function splomMain(svg_, pairList, varList) {
     .append("text")
       .attr("class", "varText")
       .style("font-size", "12px")
-      .attr("x", function(d,i){ return i * size+3; })
-      .attr("y", function(d,i){ return i==0 ? (i+0.3) * size : (i-0.12) * size; })
+      .attr("x", function(d,i){ return i * size+13; })
+      .attr("y", function(d,i){ return 50+ (i==0 ? (i) * size : (i-0.12) * size); })
       .text(function(d,i) { return traits[d.mi]; })
     //  .style("text-shadow", "1px 1px 1px #000000")
       .on('mouseover', function(d) {
@@ -242,7 +242,7 @@ function plot(p) {
   var size2 = size-5;
   var x2 = x;
   var y2 = y;
-  var shift=0;
+  var shift=1000;
   if (p.leaderi){
     size2 = sizeScale(Math.max(p.leaderi.children.length,p.leaderj.children.length));
     shift = (size-size2)/2;
